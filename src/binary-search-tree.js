@@ -57,6 +57,47 @@ class BinarySearchTree {
   }
 
   remove(data) {
+    const removeWithin = (node, data) => {
+      if (!node) { return null }
+
+      if (data < node.data) {
+        node.left = removeWithin(node.left, data)
+        return node
+      } else if (data > node.data) {
+        node.right = removeWithin(node.right, data)
+        return node
+      } else {
+        // Is leaf
+        if (!node.left && !node.right) {
+          return null
+        }
+
+        // Has right branch
+        if (!node.left) {
+          node = node.right
+          return node
+        }
+
+        // Has left branch
+        if (!node.right) {
+          node = node.left
+          return node
+        }
+
+        // Both branches exist
+        let minFromRight = node.right
+        while(minFromRight.left) {
+          minFromRight = minFromRight.left
+        }
+        node.data = minFromRight.data
+
+        node.right = removeWithin(node.right, minFromRight.data)
+
+        return node
+      }
+    }
+
+    this._root = removeWithin(this._root, data)
   }
 
   min() {
