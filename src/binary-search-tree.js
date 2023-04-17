@@ -85,13 +85,13 @@ class BinarySearchTree {
         }
 
         // Both branches exist
-        let minFromRight = node.right
-        while(minFromRight.left) {
-          minFromRight = minFromRight.left
+        let minFromLeft = node.left
+        while(minFromLeft.right) {
+          minFromLeft = minFromLeft.right
         }
-        node.data = minFromRight.data
+        node.data = minFromLeft.data
 
-        node.right = removeWithin(node.right, minFromRight.data)
+        node.left = removeWithin(node.left, minFromLeft.data)
 
         return node
       }
@@ -128,15 +128,6 @@ class BinarySearchTree {
     return getMaxWithin(this._root)
   }
 }
-
-
-const tree = new BinarySearchTree();
-tree.add(3);
-tree.add(2);
-tree.add(4);
-console.log(tree.root())
-console.log(tree.find(2))
-
 
 
 module.exports = {
